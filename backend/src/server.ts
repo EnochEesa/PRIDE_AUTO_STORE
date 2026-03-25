@@ -1,17 +1,18 @@
-import app from './app'
-import mongoose from 'mongoose'
+import { connectDB } from './config/db';
+import { env } from './config/env';
+import { logger } from './config/logger';
+import app from './app';
 
-const PORT = process.env.PORT || 5000
+const start = async (): Promise<void> => {
+  await connectDB();
 
-mongoose.connect(process.env.MONGODB_URI as string)
-.then(() => {
-  console.log("MongoDB connected")
+  app.listen(env.PORT, () => {
+    logger.info(`🚀 Pride Auto Store API running on http://localhost:${env.PORT}`);
+    logger.info(`📦 Environment: ${env.NODE_ENV}`);
+  });
+};
 
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-  })
-
-})
-.catch((err) => {
-  console.error(err)
-})
+start().catch((err) => {
+  logger.error('Failed to start server:', err);
+  process.exit(1);
+});
