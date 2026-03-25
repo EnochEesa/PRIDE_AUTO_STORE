@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
       </head>
-      <body className={geist.variable}>
+      <body className={`${geist.variable} bg-gray-50 text-gray-900`}>
         <Navbar />
         <main>{children}</main>
         <Footer />
