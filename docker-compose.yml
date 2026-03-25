@@ -1,43 +1,37 @@
-version: '3.9'
+version: "3.8"
 
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-      - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID}
-    depends_on:
-      - backend
-    restart: unless-stopped
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-    environment:
-      - NODE_ENV=production
-      - MONGODB_URI=${MONGODB_URI}
-      - JWT_SECRET=${JWT_SECRET}
-      - FRONTEND_URL=${FRONTEND_URL}
-      - EMAIL_USER=${EMAIL_USER}
-      - EMAIL_PASS=${EMAIL_PASS}
-    restart: unless-stopped
-
-  # Local dev only: remove in prod (use Atlas)
-  mongo:
-    image: mongo:7
+  mongodb:
+    image: mongo
+    container_name: pride_mongo
+    restart: always
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-    profiles:
-      - dev
+
+  backend:
+    build: ./backend
+    container_name: pride_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/pride_auto_store
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    container_name: pride_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+    depends_on:
+      - backend
 
 volumes:
   mongo_data:
