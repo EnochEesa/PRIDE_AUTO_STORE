@@ -1,0 +1,22 @@
+{
+  "name": "pride-auto-store-backend",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "ts-node src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "helmet": "^7.0.0",
+    "mongoose": "^8.0.0",
+    "express-rate-limit": "^7.0.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "ts-node": "^10.9.1"
+  }
+}
