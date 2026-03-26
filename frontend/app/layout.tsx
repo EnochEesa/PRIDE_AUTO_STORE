@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Pride Auto Store — Quality Spare Parts",
+  title: "Pride Auto Store ",
   description:
     "Your trusted source for quality automobile spare parts. Shop engine components, brake systems, filters, and more.",
 };
